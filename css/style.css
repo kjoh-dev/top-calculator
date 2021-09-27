@@ -15,7 +15,6 @@ body{
     height: auto;
 }
 .numpad{
-    /* z-index: 1; */
     position: absolute;
     top: 50%;
     left: 20%;
@@ -37,7 +36,7 @@ body{
 
     font-family: Arial, Helvetica, sans-serif;
     color: white;
-    background-color: rgba(0, 0, 0, 1);
+    background-color: rgba(0, 0, 0, 0);
     border: 1px solid white;
 }
 #add{
@@ -51,12 +50,25 @@ body{
 }
 
 .display{
-    /* z-index: 1; */
     position: absolute;
-    top: 30%;
-    left: 50%;
+    top: 28%;
+    left: 49%;
+    width: 36%;
+    height: 64%;
+    
     font-size: 24px;
-    width: 35%;
-    height: 60%;
+    
+    display:flex;
+    flex-flow: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow-x: hidden;
+    overflow-y: scroll;
     border: 2px solid pink;
+}
+.operation{
+    max-width: 100%;
+    word-wrap: break-word;
+
+    border: 1px solid black;
 }

@@ -10,6 +10,7 @@
 // 7. Implement support for keyboard
 
 const numpadButtons = document.querySelectorAll(".numpad>div");
+const display = document.querySelector(".display");
 
 window.addEventListener("keydown", showText);
 numpadButtons.forEach(button => {
@@ -27,6 +28,14 @@ function showText(e){
     } else{
         buttonSelected = e.target;
     }
-    // console.log(buttonSelected);
+
+    const newOperation = document.createElement("div");
+    newOperation.classList.add("operation");
+    newOperation.textContent = buttonSelected.textContent;
+    display.insertBefore(newOperation, display.children[0]);
+    display.scrollTop = "0";
+    // Create div element with text. Format (apply style)
+    // Get display element and add new text element as first child. Set scroll to top. 
 }
 
+// function 
