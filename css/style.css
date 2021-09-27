@@ -1,0 +1,38 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    font-family: "Indie Flower", "Brush Script MT";
+}
+
+.container{
+    z-index: -2;
+    position: relative;
+    border: 3px double red;
+}
+.background-image{
+    width: 100%;
+    height: auto;
+    z-index: -1;
+}
+.num-pad{
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    left: 20%;
+    font-size: 32px;
+    width: 27%;
+    height: 40%;
+
+    border: 2px solid pink;
+}
+.display{
+    z-index: 1;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    font-size: 24px;
+    width: 35%;
+    height: 60%;
+    border: 2px solid pink;
+}
