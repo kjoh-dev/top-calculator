@@ -21,8 +21,10 @@ const ZERO = "zero";
 const CLEAR = "clear";
 const INVALID = "invalid";
 
+//Initializations
 let inputState = OVERRIDE;
 let inputMethod = "";
+
 //HTML References
 const numpadButtons = document.querySelectorAll(".numpad>div");
 const display = document.querySelector(".display");
@@ -39,8 +41,9 @@ numpadButtons.forEach(button => {
 
 
 
-//Function Definitions
 
+
+//Function Definitions
 
 function processInput(e){
     let buttonSelected;
@@ -362,9 +365,15 @@ const calculator = {
     },
 
     roundToMaxDecimal: function (numToRound){
-        return isNaN(numToRound) ? NaN : 
-        (numToRound % 1 === 0) ? numToRound.toFixed(0) :
-        numToRound.toFixed(this.numOfDecimals);
+        if(isNaN(numToRound)) return NaN;
+        if(numToRound % 1 === 0) return numToRound;
+
+        const numAsTextArray = numToRound.toString().split("."); 
+        if(numAsTextArray[1].length <= this.numOfDecimals) {
+            return numToRound;
+        } else {
+            return numToRound.toFixed(this.numOfDecimals);
+        }
     },
 };
 

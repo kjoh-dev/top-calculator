@@ -64,11 +64,11 @@ body{
     align-items: flex-start;
     overflow-x: hidden;
     overflow-y: scroll;
-    border: 2px solid pink;
+    /* border: 2px solid pink; */
 }
 .operation{
     max-width: 100%;
     word-wrap: break-word;
 
-    border: 1px solid black;
+    /* border: 1px solid black; */
 }
