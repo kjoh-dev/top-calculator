@@ -40,9 +40,7 @@ body{
     background-color: rgba(0, 0, 0, 0);
     border: 1px solid white;
 }
-#add{
-    grid-area: 2 / 4 / 4 / 5;
-}
+
 #zero{
     grid-area: 5 / 1 / 6 / 3;
 }
@@ -53,11 +51,12 @@ body{
 .display{
     position: absolute;
     top: 28%;
-    left: 49%;
+    left: 50%;
     width: 36%;
     height: 64%;
     
-    font-size: 24px;
+    font-size: 32px;
+    letter-spacing: 2px;
     
     display:flex;
     flex-flow: column;
