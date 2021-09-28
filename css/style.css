@@ -26,8 +26,9 @@ body{
     grid-template-rows: repeat(5, 1fr);
     gap: 2px;
     
+    padding: 2px;
     font-size: 32px;
-    border: 2px solid pink;
+    /* border: 2px solid white; */
 }
 .numpad>div{
     display: flex;
