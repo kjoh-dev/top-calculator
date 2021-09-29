@@ -22,7 +22,9 @@ const CLEAR = "clear";
 const INVALID = "invalid";
 
 //Error Codes:
-const THINK = "think";
+const THINK = " YOU CAN'T DIVIDE SOMETHING WITH NOTHING!";
+const DUP_OPERATOR = " YOU NEED AN OPERAND HERE NOT AN OPERATOR!";
+const DUP_POINT = " CAN'T DO - YOU ALREADY HAVE A DECIMAL POINT!";
 
 //Initializations
 let inputState = OVERRIDE;
@@ -40,13 +42,27 @@ numpadButtons.forEach(button => {
 });
 errorElement.addEventListener("transitionend", hideErrorNotice);
 
+
+
+
+
 //Function Definitions
 
 function showErrorNotice(noticeType){
-    if(noticeType === THINK){
-        // errorElement.style.display = "block";
-        errorElement.classList.add("show");
+    switch(true){
+        case (noticeType === THINK):
+            errorElement.children[0].innerText = THINK;
+            break;
+        case (noticeType === DUP_OPERATOR):
+            errorElement.children[0].innerText = DUP_OPERATOR;
+            break;
+        case (noticeType === DUP_POINT):
+            errorElement.children[0].innerText = DUP_POINT;
+            break;
+        default:
+            break;
     }
+    errorElement.classList.add("show");
 }
 
 function hideErrorNotice(e){
@@ -84,7 +100,7 @@ function createNewOperation(innerText){
 }
 
 function addBlinker(innerText = "_"){
-    const newBlinker = document.createElement("span");
+    const newBlinker = document.createElement("small");
     if(innerText === undefined) return;
 
     const currentOp = display.children[1];
