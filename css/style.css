@@ -72,6 +72,16 @@ body{
     font-style: italic;
     /* border: 1px solid black; */
 }
+.operation>span{
+    animation: blink infinite;
+    animation-duration: 1s;
+    animation-timing-function: ease-out;
+}
+
+@keyframes blink{
+    from{opacity: 0;}
+    to{opacity: 1;}
+}
 
 .error{
     font-family: Arial, Helvetica, sans-serif;

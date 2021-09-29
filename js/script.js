@@ -83,7 +83,26 @@ function createNewOperation(innerText){
     display.scrollTop = "0";
 }
 
+function addBlinker(innerText = "_"){
+    const newBlinker = document.createElement("span");
+    if(innerText === undefined) return;
+
+    const currentOp = display.children[1];
+    const lastChar = currentOp.textContent.charAt(currentOp.textContent.length-1);
+    if (lastChar !== "." && isNaN(lastChar))
+        newBlinker.innerText = ` ${innerText}`;
+    else 
+        newBlinker.innerText = innerText;
+
+    display.children[1].appendChild(newBlinker);
+}
+function removeBlinker(){
+    display.children[1].firstElementChild.remove();
+}
+
 function executeMethod(dataKey){
+
+    removeBlinker();
 
     const currentOp = display.children[1];
     const lastChar = currentOp.textContent.charAt(currentOp.textContent.length-1);
@@ -189,6 +208,8 @@ function executeMethod(dataKey){
         default:
             break;
     }
+
+    addBlinker();
 
 }
 
