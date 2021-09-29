@@ -69,6 +69,24 @@ body{
 .operation{
     max-width: 100%;
     word-wrap: break-word;
-
+    font-style: italic;
     /* border: 1px solid black; */
+}
+
+.error{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0px;
+    color: red;
+    font-style: italic;
+    text-shadow: 1px -1px black;
+    transition-property: opacity, font-size;
+    transition-duration: 1s, 1s;
+    transition-timing-function: ease-in-out;
+    opacity: 0;
+}
+
+.show{
+    opacity: 1;
+    font-size: 18px;
+
 }

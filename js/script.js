@@ -21,6 +21,9 @@ const ZERO = "zero";
 const CLEAR = "clear";
 const INVALID = "invalid";
 
+//Error Codes:
+const THINK = "think";
+
 //Initializations
 let inputState = OVERRIDE;
 let inputMethod = "";
@@ -28,32 +31,41 @@ let inputMethod = "";
 //HTML References
 const numpadButtons = document.querySelectorAll(".numpad>div");
 const display = document.querySelector(".display");
+const errorElement = document.querySelector(".error");
 
 //Setup EventListeners for key presses and button clicks
 window.addEventListener("keydown", processInput);
 numpadButtons.forEach(button => {
     button.addEventListener("click", processInput);
 });
-
-
-
-
-
-
-
-
+errorElement.addEventListener("transitionend", hideErrorNotice);
 
 //Function Definitions
+
+function showErrorNotice(noticeType){
+    if(noticeType === THINK){
+        // errorElement.style.display = "block";
+        errorElement.classList.add("show");
+    }
+}
+
+function hideErrorNotice(e){
+    if(e.propertyName !== "font-size") return;
+    setTimeout(function () {
+        errorElement.classList.remove("show");
+    }, 2000);
+}
 
 function processInput(e){
     let buttonSelected;
     if(e.type === "keydown"){
+        if(e.key === "/") e.preventDefault();
         buttonSelected = document.querySelector(`.numpad>div[data-key='${e.key}']`);
-    } else{
+    } else if(e.type === "click"){
         buttonSelected = e.target;
-    }
+    } else {return;}
 
-    // setInputState();
+    if(buttonSelected === null) return;
     inputMethod = getMethodType(buttonSelected.className);
 
     const dataKey = buttonSelected.getAttribute("data-key");
@@ -66,13 +78,14 @@ function createNewOperation(innerText){
     const newOperation = document.createElement("div");
     newOperation.classList.add("operation");
     if(innerText !== undefined) newOperation.innerText = innerText;
-    display.insertBefore(newOperation, display.children[0]);
+
+    display.insertBefore(newOperation, display.children[1]);
     display.scrollTop = "0";
 }
 
 function executeMethod(dataKey){
 
-    const currentOp = display.children[0];
+    const currentOp = display.children[1];
     const lastChar = currentOp.textContent.charAt(currentOp.textContent.length-1);
     switch (true) {
         case (inputMethod === OVERRIDE):
@@ -95,20 +108,36 @@ function executeMethod(dataKey){
             break;
         case (inputMethod === OPERATOR_2ND):{
             const result = operate(currentOp.innerText);
-            currentOp.innerText += ` ${getMathSignCode("=")} ${result}`;
-
-            const innerText = `${result} ${getMathSignCode(dataKey)}`;
-            createNewOperation(innerText);
-            inputState = EXTEND_2ND;
+            if(result ==="Undefined - Cannot divide by 0"){
+                currentOp.innerText += ` ${getMathSignCode("=")} Undefined`;
+                showErrorNotice(THINK);
+                const innerText = `0`;
+                createNewOperation(innerText);
+                inputState = OVERRIDE;
+            } else { 
+                currentOp.innerText += ` ${getMathSignCode("=")} ${result}`;
+    
+                const innerText = `${result} ${getMathSignCode(dataKey)}`;
+                createNewOperation(innerText);
+                inputState = EXTEND_2ND;
+            }
             break;
         }
         case (inputMethod === EQUAL):{
             const result = operate(currentOp.innerText);
+            if(result ==="Undefined - Cannot divide by 0"){
+                currentOp.innerText += ` ${getMathSignCode("=")} Undefined`;
+                showErrorNotice(THINK);
+                const innerText = `0`;
+                createNewOperation(innerText);
+                inputState = OVERRIDE;
+            } else { 
             currentOp.innerText += ` ${getMathSignCode("=")} ${result}`;
 
             const innerText = `${result}`;
             createNewOperation(innerText);
             inputState = OVERRIDE;
+            }
             break;
         }
         case (inputMethod === BACKSPACE):
@@ -146,13 +175,11 @@ function executeMethod(dataKey){
             inputState = OVERRIDE;
             break;
         case (inputMethod === CLEAR):
-            for (let i = display.children.length-1; i >= 0; i--) {
+            for (let i = display.children.length-1; i > 1; i--) {
                 display.children[i].remove();
                 
             }
-
-            const innerText = `0`;
-            createNewOperation(innerText);
+            currentOp.innerText = `0`;
             inputState = OVERRIDE;
             break;
         case (inputMethod === INVALID):
@@ -346,7 +373,7 @@ const calculator = {
 
         if (operands.some(operand => !this.checkInputValidity(operand))) return NaN;
 
-        if (operands.some(operand => (operand === 0))) return "Error - cannot divide by 0";
+        if (operands.some(operand => (operand === 0))) return "Undefined - Cannot divide by 0";
 
         const result = operands.reduce((currentproduct, operand) => {
             return currentproduct / operand;
