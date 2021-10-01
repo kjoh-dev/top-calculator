@@ -22,7 +22,7 @@ numpadButtons.forEach(button => {
 errorElement.addEventListener("transitionend", hideErrorNotice);
 
 //Initialization
-let numOfDecimals = 3;
+let numOfDecimals = 5;
 const operationsLog = [];
 operationsLog[0] = {operand1: "", operator1: "", operand2: "", operator2: "", result: ""};
 
@@ -96,7 +96,15 @@ const operationObj = {
             inputAdded = this.addInputToOperand(propertyName, input) :
             inputAdded = this.addInputToOperator(propertyName, input);
 
-        if (inputAdded) return;
+        if (inputAdded) {
+            if(propertyName === OPERATOR_1){
+                operation[OPERAND_1] = Number(operation[OPERAND_1]).toString();
+            }
+            if(propertyName === OPERATOR_2){
+                operation[OPERAND_2] = Number(operation[OPERAND_2]).toString();
+            }
+            return;
+        }
 
         return `Error in operation.addInput - Invalid Input (3), ${input}: Ignored | ${operation[propertyName]}`;
     },
