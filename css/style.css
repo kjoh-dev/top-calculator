@@ -7,7 +7,6 @@ body{
 
 .container{
     position: relative;
-    border: 1px solid red;
 }
 .background-image{
     z-index: -1;
